@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bee_with_color_circles"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:padding="8dp">
+
+    <!-- Hintergrund füllt die Include-Größe (0dp = match constraints) -->
+    <ImageView
+        android:id="@+id/bee_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bee_sideview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Thorax: Größe 20% der Include-Breite/Höhe, vertikal per Bias positioniert -->
+
+    <!-- Thorax Ring (etwas größer, initially gone) -->
+
+    <ImageView
+        android:id="@+id/thorax_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/transparent_circle_placeholder_small_thickness"
+        android:rotationX="-51"
+        android:rotationY="-44"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.20"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.591"
+        app:layout_constraintWidth_percent="0.20" />
+
+    <View
+        android:id="@+id/thorax_ring"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/circle_ring"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.385"
+        app:layout_constraintWidth_percent="0.20" />
+
+    <!-- Abdomen: gleiche Prozent-Größe, andere Bias -->
+
+    <!-- Abdomen Ring -->
+
+    <ImageView
+        android:id="@+id/abdomen_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/transparent_circle_placeholder_small_thickness"
+        android:rotationX="-63"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".2"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.292"
+        app:layout_constraintWidth_percent="0.20" />
+
+    <View
+        android:id="@+id/abdomen_ring"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/circle_ring"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76"
+        app:layout_constraintWidth_percent="0.20" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

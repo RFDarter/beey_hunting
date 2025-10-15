@@ -1,0 +1,5 @@
+<!-- app/src/main/res/drawable/transparent_circle_placeholder.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@android:color/transparent"/>
+    <stroke android:width="0.2dp" android:color="#66FFFFFF"/>
+</shape>

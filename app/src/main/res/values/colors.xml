@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+
+    <color name="bee_red">#FF0000</color>
+    <color name="bee_yellow">#FFFF00</color>
+    <color name="bee_orange">#FFA500</color>
+    <color name="bee_light_blue">#31c1f0</color>
+    <color name="bee_dark_blue">#00008B</color>
+    <color name="bee_light_brown">#A0522D</color>
+    <color name="bee_dark_brown">#654321</color>
+    <color name="bee_black">#000000</color>
+    <color name="bee_light_green">#19f519</color>
+    <color name="bee_dark_green">#006400</color>
+    <color name="bee_lila">#800080</color>
+    <color name="bee_pink">#FFC0CB</color>
+
+</resources>

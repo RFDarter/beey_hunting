@@ -1,0 +1,21 @@
+<!-- app/src/main/res/layout/bee_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/bee_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        android:textStyle="bold"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/bee_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Farbe"/>
+</LinearLayout>
