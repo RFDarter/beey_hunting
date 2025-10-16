@@ -19,13 +19,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.rfdarter.beehunting.BeeAdapter
-import com.rfdarter.beehunting.BeeColor
-import com.rfdarter.beehunting.ColorAdapter
-import com.rfdarter.beehunting.HoneyBee
-import com.rfdarter.beehunting.HoneyBeeFactory
+import com.rfdarter.beehunting.beelogging.data.BeeColor
+import com.rfdarter.beehunting.beelogging.ui.common.ColorAdapter
+import com.rfdarter.beehunting.beelogging.data.HoneyBee
+import com.rfdarter.beehunting.beelogging.data.HoneyBeeFactory
 import com.rfdarter.beehunting.R
 import com.rfdarter.beehunting.SettingsActivity
+import com.rfdarter.beehunting.beelogging.ui.beelist.dialogs.AddBeeDialog
 import com.rfdarter.beehunting.databinding.ActivityMainBinding
 
 class BeeListScreen : AppCompatActivity() {
@@ -84,8 +84,17 @@ class BeeListScreen : AppCompatActivity() {
                 .start()
 
 //            createRandomBee()
-            showColorPickerOverlay()
-            beeAdapter.notifyDataSetChanged()
+            AddBeeDialog(this, colorResIds) { beeColor ->
+                if (HoneyBeeFactory.createBee(beeColor) == null) {
+                    AlertDialog.Builder(this)
+                        .setTitle("Not Allowed")
+                        .setMessage("This color combination already exists!")
+                        .setNegativeButton("OK", null)
+                        .show()
+                } else {
+                    beeAdapter.notifyDataSetChanged()
+                }
+            }.show()
         }
 
     }

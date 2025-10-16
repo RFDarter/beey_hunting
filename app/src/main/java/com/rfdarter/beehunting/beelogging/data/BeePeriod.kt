@@ -1,4 +1,4 @@
-package com.rfdarter.beehunting
+package com.rfdarter.beehunting.beelogging.data
 
 data class BeePeriod(
     val fromEvent: BeeEvent,

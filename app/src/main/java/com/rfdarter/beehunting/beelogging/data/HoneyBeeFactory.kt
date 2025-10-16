@@ -1,6 +1,6 @@
-package com.rfdarter.beehunting
+package com.rfdarter.beehunting.beelogging.data
 
-import kotlin.inc
+import com.rfdarter.beehunting.beelogging.data.BeeColor
 
 object HoneyBeeFactory {
     private val bees = mutableListOf<HoneyBee>()

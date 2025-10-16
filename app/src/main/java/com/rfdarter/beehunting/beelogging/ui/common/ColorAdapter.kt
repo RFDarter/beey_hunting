@@ -1,6 +1,7 @@
 // app/src/main/java/com/example/myapplication2/ColorAdapter.kt
-package com.rfdarter.beehunting
+package com.rfdarter.beehunting.beelogging.ui.common
 
+import android.R
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
@@ -28,9 +29,9 @@ class ColorAdapter(
 
         val gd = GradientDrawable()
         gd.shape = GradientDrawable.OVAL
-        gd.setStroke(2.dpToPx(context), ContextCompat.getColor(context, android.R.color.white))
+        gd.setStroke(2.dpToPx(context), ContextCompat.getColor(context, R.color.white))
         if (resId == null) {
-            view.background=ContextCompat.getDrawable(context, R.drawable.texture_transparent_oval)
+            view.background=ContextCompat.getDrawable(context, com.rfdarter.beehunting.R.drawable.texture_transparent_oval)
             view.foreground = gd
         } else {
             gd.setColor(ContextCompat.getColor(context, resId))

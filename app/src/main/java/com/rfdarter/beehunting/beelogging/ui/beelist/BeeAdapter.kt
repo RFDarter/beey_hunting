@@ -1,10 +1,13 @@
-package com.rfdarter.beehunting
+package com.rfdarter.beehunting.beelogging.ui.beelist
 
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.rfdarter.beehunting.R
+import com.rfdarter.beehunting.beelogging.data.HoneyBee
 import com.rfdarter.beehunting.databinding.BeeItemBinding
 
 class BeeAdapter(private val bees: List<HoneyBee>,
@@ -33,7 +36,7 @@ class BeeAdapter(private val bees: List<HoneyBee>,
 
     override fun getItemCount() = bees.size
 
-    fun setBeeColor(imageView: android.widget.ImageView, color: Int?) {
+    fun setBeeColor(imageView: ImageView, color: Int?) {
         if (color == null) {
             imageView.setImageDrawable(null)
             imageView.background = ContextCompat.getDrawable(imageView.context, R.drawable.transparent_circle_placeholder)

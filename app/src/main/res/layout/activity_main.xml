@@ -57,7 +57,7 @@
             android:layout_gravity="top|end"
             android:background="@drawable/plus_background"
             android:padding="2dp"
-            android:src="@drawable/add"
+            android:src="@drawable/ic_add"
             android:tint="@android:color/black" />
     </FrameLayout>
 

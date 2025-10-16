@@ -1,4 +1,6 @@
-package com.rfdarter.beehunting
+package com.rfdarter.beehunting.beelogging.data
+
+import com.rfdarter.beehunting.beelogging.data.BeeColor
 
 enum class BeeStatus {
     atFeeder,
@@ -22,7 +24,13 @@ class HoneyBee(
             this.status = BeeStatus.flyingtoHive
             val lastArrived = events.dropLast(1).lastOrNull { it.eventType == EventType.ArrivedAtFeeder }
             if (lastArrived != null) {
-                feederPeriods.add(BeePeriod(lastArrived, event, event.timestamp - lastArrived.timestamp))
+                feederPeriods.add(
+                    BeePeriod(
+                        lastArrived,
+                        event,
+                        event.timestamp - lastArrived.timestamp
+                    )
+                )
             }
         } else if (event.eventType == EventType.ArrivedAtFeeder) {
             this.status = BeeStatus.atFeeder
