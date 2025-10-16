@@ -5,12 +5,14 @@ import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,7 +24,7 @@ import com.rfdarter.beehunting.R
 class AddBeeDialog(
     private val context: Context,
     private val colorResIds: List<Int>,
-    private val onBeeCreated: (BeeColor) -> Unit
+    private val onAddBeePressed: (BeeColor, (Boolean) -> Unit) -> Unit
 ) {
 
     private var dialog: Dialog? = null
@@ -35,7 +37,7 @@ class AddBeeDialog(
             window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
 
-        val thoraxPreview = view.findViewById<ImageView>(R.id.thorax_preview)
+        val thoraxPreview = view.findViewById<ImageView>(R.id.thorax_preview_2)
         val abdomenPreview = view.findViewById<ImageView>(R.id.abdomen_preview)
         val thoraxRing = view.findViewById<View>(R.id.thorax_ring)
         val abdomenRing = view.findViewById<View>(R.id.abdomen_ring)
@@ -126,9 +128,28 @@ class AddBeeDialog(
             val thoraxColor = selectedThoraxRes?.let { ContextCompat.getColor(context, it) }
             val abdomenColor = selectedAbdomenRes?.let { ContextCompat.getColor(context, it) }
 
-            onBeeCreated(BeeColor(thoraxColor, abdomenColor))
-            stopCurrentPulse()
-            dialog?.dismiss()
+            val payload = BeeColor(thoraxColor, abdomenColor)
+
+            addBtn.isEnabled = false
+            onAddBeePressed(payload) { success ->
+                addBtn.post {
+                    addBtn.isEnabled = true
+                    if (!success) {
+                        AlertDialog.Builder(context)
+                            .setTitle("Not Allowed")
+                            .setMessage("This color combination already exists!")
+                            .setNegativeButton("OK", null)
+                            .show()
+                    } else {
+                        stopCurrentPulse()
+                        Toast.makeText(context, context.getString(R.string.bee_added_success), Toast.LENGTH_SHORT).apply {
+                            setGravity(Gravity.CENTER, 0, 0)
+                            show()
+                        }
+                        dialog?.dismiss()
+                    }
+                }
+            }
         }
 
         updatePreview(thoraxPreview, null)

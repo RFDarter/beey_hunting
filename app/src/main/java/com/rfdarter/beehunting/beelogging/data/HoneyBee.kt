@@ -1,6 +1,7 @@
 package com.rfdarter.beehunting.beelogging.data
 
 import com.rfdarter.beehunting.beelogging.data.BeeColor
+import com.rfdarter.beehunting.beelogging.data.BeeEvent.*
 
 enum class BeeStatus {
     atFeeder,
@@ -20,7 +21,7 @@ class HoneyBee(
 
     fun addEvent(event: BeeEvent) {
         events.add(event)
-        if (event.eventType == EventType.LeftFeederToHive) {
+        if (event.eventType == EventType.DepartedFromFeeder) {
             this.status = BeeStatus.flyingtoHive
             val lastArrived = events.dropLast(1).lastOrNull { it.eventType == EventType.ArrivedAtFeeder }
             if (lastArrived != null) {
@@ -34,7 +35,7 @@ class HoneyBee(
             }
         } else if (event.eventType == EventType.ArrivedAtFeeder) {
             this.status = BeeStatus.atFeeder
-            val lastLeft = events.dropLast(1).lastOrNull { it.eventType == EventType.LeftFeederToHive }
+            val lastLeft = events.dropLast(1).lastOrNull { it.eventType == EventType.DepartedFromFeeder }
             if (lastLeft != null) {
                 awayPeriods.add(BeePeriod(lastLeft, event, event.timestamp - lastLeft.timestamp))
             }
@@ -50,8 +51,8 @@ class HoneyBee(
     }
 
     fun getFeederDuration(beeEvent: BeeEvent) : Long {
-        if (beeEvent.eventType != EventType.LeftFeederToHive) {
-            throw IllegalArgumentException("Event must be of type LeftFeederToHive")
+        if (beeEvent.eventType != EventType.DepartedFromFeeder) {
+            throw IllegalArgumentException("Event must be of type DepartedFromFeeder")
         }
         val feederPeriod: BeePeriod? = feederPeriods.find { it.toEvent == beeEvent }
         return feederPeriod?.duration ?: 0

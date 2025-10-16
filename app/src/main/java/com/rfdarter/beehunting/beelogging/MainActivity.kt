@@ -1,37 +1,34 @@
-package com.rfdarter.beehunting.beelogging.ui.beelist
+package com.rfdarter.beehunting.beelogging
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.rfdarter.beehunting.beelogging.data.BeeColor
-import com.rfdarter.beehunting.beelogging.ui.common.ColorAdapter
-import com.rfdarter.beehunting.beelogging.data.HoneyBee
-import com.rfdarter.beehunting.beelogging.data.HoneyBeeFactory
 import com.rfdarter.beehunting.R
 import com.rfdarter.beehunting.SettingsActivity
+import com.rfdarter.beehunting.beelogging.data.HoneyBee
+import com.rfdarter.beehunting.beelogging.data.HoneyBeeFactory
+import com.rfdarter.beehunting.beelogging.ui.beelist.BeeAdapter
+import com.rfdarter.beehunting.beelogging.ui.beelist.BeeListViewModel
 import com.rfdarter.beehunting.beelogging.ui.beelist.dialogs.AddBeeDialog
+import com.rfdarter.beehunting.beelogging.ui.beelist.dialogs.AddBeeEventDialog
 import com.rfdarter.beehunting.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var beeAdapter: BeeAdapter
+
+    private val viewModel by viewModels<BeeListViewModel>()
 
     private val colorNames = listOf(
         "Rot", "Gelb", "Orange", "Hellblau", "Dunkelblau", "Hellbraun", "Dunkelbraun", "Schwarz", "Hellgrün", "Dunkelgrün", "Lila", "Pink"
@@ -51,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         R.color.bee_pink
     )
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,9 +60,24 @@ class MainActivity : AppCompatActivity() {
         overflowDrawable?.setTint(ContextCompat.getColor(this, android.R.color.white)) // Farbe anpassen falls nötig
         binding.toolbar.overflowIcon = overflowDrawable
 
-        beeAdapter = BeeAdapter(HoneyBeeFactory.getAllBees()) { bee ->
-            showBeeInfoOverlay(bee)
-        }
+        beeAdapter = BeeAdapter(HoneyBeeFactory.getAllBees(),
+            onBeeClick = { bee ->
+                AddBeeEventDialog(
+                    this,
+                    bee,
+                    onArrivedPressed = {
+                        viewModel.OnBeeArrivedPressed(bee)
+                    },
+                    onLeftPressed = {
+                        viewModel.OnBeeLeftPressed(bee)
+                    }
+                ).show()
+            },
+            onBeeLongClick = { anchorView, bee ->
+                showBeeItemMenu(anchorView, bee)
+                true
+            }
+        )
         binding.beeList.layoutManager = LinearLayoutManager(this)
         binding.beeList.adapter = beeAdapter
 
@@ -83,20 +96,67 @@ class MainActivity : AppCompatActivity() {
                 }
                 .start()
 
-//            createRandomBee()
-            AddBeeDialog(this, colorResIds) { beeColor ->
-                if (HoneyBeeFactory.createBee(beeColor) == null) {
-                    AlertDialog.Builder(this)
-                        .setTitle("Not Allowed")
-                        .setMessage("This color combination already exists!")
-                        .setNegativeButton("OK", null)
-                        .show()
-                } else {
-                    beeAdapter.notifyDataSetChanged()
-                }
+            AddBeeDialog(
+                this,
+                colorResIds = colorResIds
+            ) { beeColor, done ->
+                // synchroner Versuch: gibt null zurück, wenn Kombination existiert
+                val created = viewModel.AddNewBee(beeColor) != null
+                done(created) // Dialog schließt nur bei true
+                beeAdapter.notifyDataSetChanged()
             }.show()
+
+//            createRandomBee()
+//            AddBeeDialog(this, colorResIds) { beeColor ->
+//                if( viewModel.AddNewBee(beeColor) == null){
+//                    return false
+//                } else {
+//                    return true
+//                    beeAdapter.notifyDataSetChanged()
+//                }
+//            }.show()
         }
 
+    }
+
+    private fun showBeeItemMenu(anchor: View, bee: HoneyBee) {
+        val idDetails = 1
+        val idDelete = 2
+        PopupMenu(this, anchor).apply {
+            menu.add(0, idDetails, 0, "Details")
+            menu.add(0, idDelete, 1, "Delete")
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    idDetails -> {
+                        showBeeInfoOverlay(bee)
+                        true
+                    }
+                    idDelete -> {
+                        confirmAndDeleteBee(bee)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            show()
+        }
+    }
+
+    private fun confirmAndDeleteBee(bee: HoneyBee) {
+        AlertDialog.Builder(this)
+            .setTitle("Delete Bee?")
+            .setMessage("This action can not be reversed!")
+            .setNegativeButton("Canlce", null)
+            .setPositiveButton("Delete") { _, _ ->
+                if (viewModel.DeleteBee(bee)) {
+                    beeAdapter.notifyDataSetChanged()
+                    Toast.makeText(this, "Bee deleted", Toast.LENGTH_SHORT).apply {
+                        setGravity(Gravity.CENTER, 0, 0)
+                        show()
+                    }
+                }
+            }
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

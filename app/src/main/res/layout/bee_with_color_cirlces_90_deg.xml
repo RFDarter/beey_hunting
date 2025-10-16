@@ -23,7 +23,7 @@
     <!-- Thorax Ring (etwas größer, initially gone) -->
 
     <ImageView
-        android:id="@+id/thorax_preview"
+        android:id="@+id/abdomen_preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/transparent_circle_placeholder_small_thickness"
@@ -57,7 +57,7 @@
     <!-- Abdomen Ring -->
 
     <ImageView
-        android:id="@+id/abdomen_preview"
+        android:id="@+id/thorax_preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/transparent_circle_placeholder_small_thickness"

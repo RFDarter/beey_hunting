@@ -6,7 +6,7 @@
 
     <activity
         android:id="@+id/beeListScreen"
-        android:name="com.rfdarter.beehunting.beelogging.ui.beelist.MainActivity"
+        android:name="com.rfdarter.beehunting.beelogging.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
 </navigation>

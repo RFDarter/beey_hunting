@@ -2,6 +2,7 @@ package com.rfdarter.beehunting.beelogging.ui.beelist
 
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -11,13 +12,15 @@ import com.rfdarter.beehunting.beelogging.data.HoneyBee
 import com.rfdarter.beehunting.databinding.ListItemBeeBinding
 
 class BeeAdapter(private val bees: List<HoneyBee>,
-                 private val onBeeClick: (HoneyBee) -> Unit
+                 private val onBeeClick: (HoneyBee) -> Unit,
+                 private val onBeeLongClick: (View, HoneyBee) -> Boolean
 ) : RecyclerView.Adapter<BeeAdapter.BeeViewHolder>() {
 
     class BeeViewHolder(val binding: ListItemBeeBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeeViewHolder {
         val binding = ListItemBeeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return BeeViewHolder(binding)
     }
 
@@ -27,11 +30,11 @@ class BeeAdapter(private val bees: List<HoneyBee>,
         val abdomenView = holder.binding.include.abdomenPreview
         setBeeColor(thoraxView, bee.color.thorax)
         setBeeColor(abdomenView, bee.color.abdomen)
-//        holder.binding.beeId.text = "ID: ${bee.id}"
-//        val thorax = bee.color.thorax?.let { "#${Integer.toHexString(it)}" } ?: "keine"
-//        val abdomen = bee.color.abdomen?.let { "#${Integer.toHexString(it)}" } ?: "keine"
-//        holder.binding.beeColor.text = "Thorax: $thorax, Abdomen: $abdomen"
+
         holder.binding.root.setOnClickListener { onBeeClick(bee) }
+        holder.binding.root.setOnLongClickListener { v ->
+            onBeeLongClick(v, bee) // muss Boolean zurückgeben
+        }
     }
 
     override fun getItemCount() = bees.size

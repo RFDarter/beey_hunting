@@ -18,6 +18,8 @@ object HoneyBeeFactory {
         return bee
     }
 
-
+    fun deleteBee(bee: HoneyBee): Boolean {
+        return HoneyBeeFactory.bees.remove(bee)
+    }
     fun getAllBees(): List<HoneyBee> = bees
 }

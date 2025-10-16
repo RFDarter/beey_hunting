@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeeHunting">
         <activity
-            android:name=".beelogging.ui.beelist.MainActivity"
+            android:name=".beelogging.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.BeeHunting">
             <intent-filter>

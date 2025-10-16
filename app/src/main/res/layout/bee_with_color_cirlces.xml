@@ -22,7 +22,7 @@
 
     <!-- Thorax: Größe 20% der Include-Breite/Höhe, vertikal per Bias positioniert -->
     <ImageView
-        android:id="@+id/thorax_preview"
+        android:id="@+id/thorax_preview_2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/transparent_circle_placeholder"
