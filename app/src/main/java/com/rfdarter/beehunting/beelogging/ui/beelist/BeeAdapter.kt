@@ -8,16 +8,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.rfdarter.beehunting.R
 import com.rfdarter.beehunting.beelogging.data.HoneyBee
-import com.rfdarter.beehunting.databinding.BeeItemBinding
+import com.rfdarter.beehunting.databinding.ListItemBeeBinding
 
 class BeeAdapter(private val bees: List<HoneyBee>,
                  private val onBeeClick: (HoneyBee) -> Unit
 ) : RecyclerView.Adapter<BeeAdapter.BeeViewHolder>() {
 
-    class BeeViewHolder(val binding: BeeItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class BeeViewHolder(val binding: ListItemBeeBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeeViewHolder {
-        val binding = BeeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListItemBeeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BeeViewHolder(binding)
     }
 

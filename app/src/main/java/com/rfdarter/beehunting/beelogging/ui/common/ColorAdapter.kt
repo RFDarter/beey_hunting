@@ -7,7 +7,7 @@ import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.rfdarter.beehunting.databinding.ColorItemBinding
+import com.rfdarter.beehunting.databinding.ListItemColorBinding
 import androidx.core.content.ContextCompat
 
 class ColorAdapter(
@@ -16,10 +16,10 @@ class ColorAdapter(
     private val onColorSelected: (Int?) -> Unit
 ) : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
 
-    inner class ColorViewHolder(val binding: ColorItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ColorViewHolder(val binding: ListItemColorBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
-        val binding = ColorItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListItemColorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ColorViewHolder(binding)
     }
 

@@ -29,7 +29,7 @@ class AddBeeDialog(
     private var currentAnimators: List<ValueAnimator>? = null
 
     fun show() {
-        val view = LayoutInflater.from(context).inflate(R.layout.dialog_color_picker_overlay, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.dialog_add_bee, null)
         dialog = Dialog(context).apply {
             setContentView(view)
             window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)

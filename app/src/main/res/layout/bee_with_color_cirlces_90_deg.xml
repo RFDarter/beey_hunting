@@ -2,9 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bee_with_color_circles"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
-    android:padding="8dp">
+    android:layout_width="300dp"
+    android:layout_height="300dp">
 
     <!-- Hintergrund füllt die Include-Größe (0dp = match constraints) -->
     <ImageView
